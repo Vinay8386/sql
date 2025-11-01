@@ -9,8 +9,24 @@ Step,      Clause,                  Purpose
 6th,      ORDER BY               Sorts the final result set.
 7th,      LIMIT / OFFSET         Limits the number of rows returned.
 
+==================================================================================================================! The SQL JOIN TYPE !============================================================================================================================================
+
 => Execution vs. Writing: The order above is the execution order. We write the query in a different order (e.g., SELECT first, FROM second).
 => The Precise GROUP BY Rule:
   -> If your SELECT list contains ONLY aggregate functions OR ONLY non-aggregate functions, you DO NOT need a GROUP BY clause.
   -> If your SELECT list contains a mix of both aggregate functions and non-aggregate functions, you MUST include a GROUP BY clause. The non-aggregated columns define how the data should be partitioned for the calculation.
   -> Example with Internal working step: https://leetcode.com/problems/customer-who-visited-but-did-not-make-any-transactions/?envType=study-plan-v2&envId=top-sql-50
+
+=> Self-Join & Cross Join
+  -> The JOIN (Self-Join): In SQL, a JOIN is used to combine columns from two or more tables based on a related column between them. A Self-Join is simply a JOIN where a table is joined to itself.
+  -> How the Self-Join Works Internally (The Cross Join Phase)
+    -> Initialization and Aliasing: The database uses the FROM TableName w1 JOIN TableName w2 syntax to treat the single physical table as two temporary, separate tables: w1 (Table 1) and w2 (Table 2). This step allows you to reference columns from the same row using two different contexts (e.g., w1.Employee vs. w2.Manager).
+    -> The Cartesian Product (The "Massive Table" Creation): The database engine takes every single row from the first aliased table (w1) and matches it with every single row from the second aliased table (w2).
+      -> If the original table has N rows, the temporary internal table created at this stage will have N*N rows. This is the Cross Join Phase.
+      -> Example: If you have 10 rows in your table, this temporary table will have 10*10 = 100 rows.
+    -> The ON Clause Filtration (The Joining Condition): The database immediately applies the condition specified in the ON clause to the massive N*N result set.
+      -> The ON clause acts as a filter, removing the vast majority of combinations and keeping only the meaningful pairs that satisfy the relationship you defined.
+      -> Only the rows that logically belong together (e.g., today's temperature paired with yesterday's temperature(Sequential/Temporal: w2.Date = w1.Date + 1 Day)) remain for the final SELECT step.
+    -> The Cross Join is a necessary internal step in a Self-Join. It guarantees that the engine considers every possible pairing before the ON clause condition filters the matches down to the specific relationship you need (e.g., employee to manager, or day to previous day).
+  ->Example: https://leetcode.com/problems/rising-temperature/description/?envType=study-plan-v2&envId=top-sql-50
+
