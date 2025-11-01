@@ -1,0 +1,16 @@
+============================================================================================================! The SQL Execution Order !=======================================================================================================================================
+
+Step,      Clause,                  Purpose
+1st,      FROM / JOIN            Determines the data source (the tables) and combines them (if necessary) to form the base result set. This is always the starting point.
+2nd,      WHERE                  Filters the rows from the base result set before any grouping or aggregation.
+3rd,      GROUP BY               Partitions the filtered rows into groups for aggregation.
+4th,      HAVING                 Filters the groups created by GROUP BY (based on aggregate results).
+5th,      SELECT                 Calculates aggregate functions and selects the final columns.
+6th,      ORDER BY               Sorts the final result set.
+7th,      LIMIT / OFFSET         Limits the number of rows returned.
+
+=> Execution vs. Writing: The order above is the execution order. We write the query in a different order (e.g., SELECT first, FROM second).
+=> The Precise GROUP BY Rule:
+  -> If your SELECT list contains ONLY aggregate functions OR ONLY non-aggregate functions, you DO NOT need a GROUP BY clause.
+  -> If your SELECT list contains a mix of both aggregate functions and non-aggregate functions, you MUST include a GROUP BY clause. The non-aggregated columns define how the data should be partitioned for the calculation.
+  -> Example with Internal working step: https://leetcode.com/problems/customer-who-visited-but-did-not-make-any-transactions/?envType=study-plan-v2&envId=top-sql-50
