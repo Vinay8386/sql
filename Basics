@@ -30,3 +30,20 @@ Step,      Clause,                  Purpose
     -> The Cross Join is a necessary internal step in a Self-Join. It guarantees that the engine considers every possible pairing before the ON clause condition filters the matches down to the specific relationship you need (e.g., employee to manager, or day to previous day).
   ->Example: https://leetcode.com/problems/rising-temperature/description/?envType=study-plan-v2&envId=top-sql-50
 
+==================================================================================================================! MySQL Numeric Functions (Mathematical) !============================================================================================================================================
+=> ABS(x) : Return the absolute non-negative value of x. Example: SELECT ABS(-10); (Result: 10)
+=> ROUND(x, d): Rounds x to d decimal places. Example: SELECT ROUND(4.567, 2); (Result: 4.57)
+=> CEIL(x): Returns the smallest integer greater than or equal to x (rounds up). Example: SELECT CEIL(5.1); (Result: 6)
+=> FLOOR(x): Returns the largest integer less than or equal to x (rounds down). Example: SELECT FLOOR(5.9); (Result: 5)
+=> MOD(N, M): Returns the remainder of N divided by M. (Same as N % M). Example: SELECT MOD(10, 3); (Result: 1)
+=> POWER(x, y): Returns x raised to the power of y. Example: SELECT POWER(2, 3); (Result: 8)
+=> SQRT(x): Returns the non-negative square root of x. Example: SELECT SQRT(9); (Result: 3)
+
+==================================================================================================================! MySQL String Functions !============================================================================================================================================
+=> CONCAT(s1, s2, ...): Joins two or more strings together. Example: SELECT CONCAT('Hello', ' ', 'World'); (Result: 'Hello World')
+=> LENGTH(s): Returns the length of the string in bytes. Example: SELECT LENGTH('SQL'); (Result: 3)
+=> CHAR_LENGTH(s): Returns the length of the string in characters. Example: SELECT CHAR_LENGTH('SQL'); (Result: 3)
+=> SUBSTRING(s, start, len): Extracts a substring of length len starting at start. Example: SELECT SUBSTRING('Database', 4, 3); (Result: 'aba')
+=> UPPER(s) / LOWER(s): Converts the string to uppercase / lowercase. Example: SELECT UPPER('test'); (Result: 'TEST')
+=> TRIM(s): Removes leading and trailing spaces (or specified characters). Example: SELECT TRIM(' SQL '); (Result: 'SQL')
+=> REPLACE(s, old, new): Replaces all occurrences of old string with new string in s. Example: SELECT REPLACE('cat', 'c', 'b'); (Result: 'bat')
