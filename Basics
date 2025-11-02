@@ -9,9 +9,10 @@ Step,      Clause,                  Purpose
 6th,      ORDER BY               Sorts the final result set.
 7th,      LIMIT / OFFSET         Limits the number of rows returned.
 
+=> Execution vs. Writing: The order above is the execution order. We write the query in a different order (e.g., SELECT first, FROM second).
+
 ==================================================================================================================! RULE !============================================================================================================================================
 
-=> Execution vs. Writing: The order above is the execution order. We write the query in a different order (e.g., SELECT first, FROM second).
 => The Precise GROUP BY Rule:
   -> If your SELECT list contains ONLY aggregate functions OR ONLY non-aggregate functions, you DO NOT need a GROUP BY clause.
   -> If your SELECT list contains a mix of both aggregate functions and non-aggregate functions, you MUST include a GROUP BY clause. The non-aggregated columns define how the data should be partitioned for the calculation.
