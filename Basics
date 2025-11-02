@@ -47,3 +47,23 @@ Step,      Clause,                  Purpose
 => UPPER(s) / LOWER(s): Converts the string to uppercase / lowercase. Example: SELECT UPPER('test'); (Result: 'TEST')
 => TRIM(s): Removes leading and trailing spaces (or specified characters). Example: SELECT TRIM(' SQL '); (Result: 'SQL')
 => REPLACE(s, old, new): Replaces all occurrences of old string with new string in s. Example: SELECT REPLACE('cat', 'c', 'b'); (Result: 'bat')
+
+==================================================================================================================! MySQL Date and Time Functions !============================================================================================================================================
+=> NOW(): Returns the current date and time. Example: SELECT NOW(); (e.g., 2023-11-02 10:17:00)
+=> CURDATE(): Returns the current date. Example: SELECT CURDATE(); (e.g., 2023-11-02)
+=> YEAR(d) / MONTH(d) / DAY(d): Extracts the year, month, or day part from a date. Example: SELECT YEAR(CURDATE()); (e.g., 2023)
+=> DATEDIFF(d1, d2): Returns the number of days between two dates. Example: SELECT DATEDIFF('2023-11-02', '2023-10-02'); (Result: 31)
+=> DATE_ADD(d, INTERVAL val unit): Adds a time interval to a date. Example: SELECT DATE_ADD(CURDATE(), INTERVAL 1 WEEK);
+=> DATE_FORMAT(d, format): Formats a date value as specified. Example: SELECT DATE_FORMAT(NOW(), '%Y/%m/%d');
+
+==================================================================================================================! MySQL Aggregate Functions (Used with GROUP BY) !============================================================================================================================================
+=> COUNT(*) / COUNT(col): Returns the number of rows (or non-NULL values in a column). Example: SELECT COUNT(*) FROM Users;
+=> SUM(col): Returns the total sum of values in the column. Example: SELECT SUM(Price) FROM Orders;
+=> AVG(col): Returns the average value of the column. Example: SELECT AVG(Rating) FROM Cinema;
+=> MAX(col): Returns the maximum value in the column. Example: SELECT MAX(Rating) FROM Cinema;
+=> MIN(col): Returns the minimum value in the column. Example: SELECT MIN(Rating) FROM Cinema;
+
+==================================================================================================================! MySQL Conditional Functions !============================================================================================================================================
+=> CASE (Expression): The full conditional structure for complex logic. Example: CASE WHEN price > 100 THEN 'Expensive' ELSE 'Cheap' END
+=> IF(condition, val_true, val_false): A simpler inline conditional (MySQL specific). Example: SELECT IF(id % 2 = 0, 'Even', 'Odd') FROM Cinema;
+=> IFNULL(a, b): Returns a if it is not NULL, otherwise returns b. Example: SELECT IFNULL(NullableName, 'N/A');
