@@ -11,6 +11,34 @@ Step,      Clause,                  Purpose
 
 => Execution vs. Writing: The order above is the execution order. We write the query in a different order (e.g., SELECT first, FROM second).
 
+==================================================================================================! SQL Query Execution: Logical Processing Order !============================================================================================================================================
+
+=> This sequence explains how a database internally processes and executes a standard SQL query, focusing on how columns are handled.
+=> Phase 1: Planning and Parsing (Reads the Whole Query)
+  -> The database engine starts by reading the entire query to build an execution plan before fetching any data.
+  -> Reads All Clauses: The engine identifies every table, column, and function used throughout the query (in the FROM, JOIN, ON, GROUP BY, and SELECT clauses).
+  -> Column Inventory: It creates an inventory of ALL necessary columns. A column is necessary if it's used for:
+    -> Joining tables (ON conditions).
+    -> Filtering data (WHERE or HAVING conditions).
+    -> Grouping results (GROUP BY).
+    -> Calculations (SUM, AVG, ROUND).
+    -> The final output (SELECT)
+=> Phase 2: Data Acquisition and Transformation (The First Logical Steps): These steps create the working dataset that is acted upon by the rest of the query.
+  -> Step 1: FROM and JOIN (Creates the Intermediate Table)
+    -> Execution: This is the first logical step executed.
+    -> Column Inclusion: The engine builds a single, wide intermediate table that contains ALL columns needed for the inventory created in Phase 1 (i.e., all columns from both tables, filtered by the ON clause).
+    -> Filtering: The ON condition (e.g., U.purchase_date BETWEEN P.start_date AND P.end_date) is applied immediately to filter rows during the join process, ensuring only relevant records make it into the intermediate table.
+  -> Step 2: GROUP BY (Aggregates Data)
+    -> Execution: Takes the intermediate table from Step 1.
+    -> Grouping: It bundles rows together based on the specified column (P.product_id).
+  -> Step 3: SELECT Calculations (Calculates the Final Values)
+    -> Execution: The aggregate functions (SUM, ROUND, COALESCE) are applied to the groups defined in Step 2. The weighted average is calculated here: SUM(Revenue) / SUM(Units).
+=> Phase 3: Projection (The Final Output)
+  -> Step 4: SELECT (Projects the Final Result)
+    -> Execution: This is the last step.
+    -> Column Filtering: The database discards all the intermediate columns used for joining, filtering, and internal calculation.
+    -> Result: Only the columns explicitly listed in the final SELECT clause (product_id and the calculated average_price) are returned to the user.
+
 ==================================================================================================================! RULE !============================================================================================================================================
 
 => The Precise GROUP BY Rule:
