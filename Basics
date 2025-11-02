@@ -70,3 +70,8 @@ Step,      Clause,                  Purpose
 => CASE (Expression): The full conditional structure for complex logic. Example: CASE WHEN price > 100 THEN 'Expensive' ELSE 'Cheap' END
 => IF(condition, val_true, val_false): A simpler inline conditional (MySQL specific). Example: SELECT IF(id % 2 = 0, 'Even', 'Odd') FROM Cinema;
 => IFNULL(a, b): Returns a if it is not NULL, otherwise returns b. Example: SELECT IFNULL(NullableName, 'N/A');
+=> COALESCE(expression1, expression2, expression3, ...): It evaluates its arguments in order and returns the first argument that is not NULL.
+  -> Example: COALESCE(ROUND( SUM(P.price * U.units) / SUM(U.units), 2),0.00) 
+  -> The function first tries to return the result of the entire ROUND(...) expression.
+  -> If the ROUND(...) expression evaluates to NULL (which could happen if, for example, a product was somehow included in the GROUP BY but had no associated units, leading to a division by zero that evaluates to NULL), then COALESCE skips this argument.
+  -> It then returns the second argument, 0.00, ensuring the final average price for that product is reported as zero
